@@ -32,7 +32,7 @@ def main():
     while True:
         
         client_1.send_raw(json.dumps(msg))
-        if count == 99:
+        if count == 100000:
             break
         count = count + 1
         #print json.loads(raw_data)

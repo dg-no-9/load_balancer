@@ -21,16 +21,17 @@ def main():
     poll.register(socket, zmq.POLLIN)
     reqs = 0
     count=0
+    begin=time.time()
     while True:
         reqs = reqs + 1
-        print 'Req #%d sent..' % (reqs)
+        #print 'Req #%d sent..' % (reqs)
         socket.send_string(u'request #%d' % (reqs))
-        for i in range(5):
-            sockets = dict(poll.poll(100))
-            if socket in sockets:
-                msg = socket.recv()
-                count = count + 1
-                print 'Client %s received: %s count %d' % (identity, msg, count)
+        #for i in range(5):
+        sockets = dict(poll.poll(10))
+        if socket in sockets:
+            msg = socket.recv()
+            count = count + 1
+            print 'Client %s received: %s count %d time %d' % (identity, msg, count, time.time() - begin)
 
     socket.close()
     context.term()
